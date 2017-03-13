@@ -1,8 +1,0 @@
-[
-    { "name": "practice Mobx", "done": false },
-    { "name": "learn things", "done": false },
-    { "name": "watch YouTube", "done": false },
-    { "name": "listen to CMS", "done": true },
-    { "name": "drink tea", "done": false },
-    { "name": "drink coffee", "done": false }
-]
