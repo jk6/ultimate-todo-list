@@ -44,8 +44,7 @@ class App extends Component {
     this.props.todos.resetChecks();
   }
   handleSelectList (e){
-    this.props.todos.loadItems(e.target.value);
-    
+    this.props.todos.loadItems(e.target.value);    
   }
   componentDidMount (){
       //this.props.todos.loadItems();
@@ -90,6 +89,7 @@ class App extends Component {
                     completed={completedTaskCount} 
                     remaining={remainingTaskCount} 
                     handleReset={this.handleReset}    
+                    currentList={currentList}
                 />
             </Row>            
             <Row md={12}>

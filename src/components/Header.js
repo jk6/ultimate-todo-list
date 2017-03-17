@@ -7,7 +7,14 @@ const Header = (props) => {
         <Jumbotron style={styles.header}>
             <Row>
                 <Col md={4}>
-                    <h3>Select a list</h3>
+                    {props.currentList != '' ? 
+                        <h3>{props.currentList}</h3>
+                        :
+                        <div>
+                            <h3>Select a list</h3>
+                            <i className="glyphicon glyphicon-arrow-down" style={{fontSize: 20}}></i>
+                        </div>
+                    }                    
                 </Col>
                 <Col md={4}>
                     <h3>To Do ({props.remaining})</h3>

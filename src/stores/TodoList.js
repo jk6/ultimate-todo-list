@@ -17,7 +17,8 @@ class TodoList {
         .catch(err => console.log(err.toString()))
     }
     else {
-      this.items = [];
+      this.currentList = '';
+      this.items = [];      
     }    
   }  
 
