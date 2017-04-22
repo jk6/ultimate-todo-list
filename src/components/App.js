@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { action } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { Grid, Row, Col, Modal } from 'react-bootstrap';
 import Checkbox from 'material-ui/Checkbox';
@@ -26,12 +27,15 @@ class App extends Component {
   handleShowAddItemModal (){
       this.props.todos.showNewItemModal();
   }
-  handleAddListItem (){
+  @action handleAddListItem (){
+    const { items } = this.props.todos;
+
     let newObj = {
-        id: this.props.todos.items.length.toString(),
+        id: items.length.toString(),
         name: this.newItem.value,
         done: false
     };
+
     this.props.todos.addListItem(newObj);    
   }
   handleCancelAdd (){
@@ -44,7 +48,7 @@ class App extends Component {
     this.props.todos.resetChecks();
   }
   handleSelectList (e){
-    this.props.todos.loadItems(e.target.value);    
+    this.props.todos.loadItems(e.target.value);        
   }
   componentDidMount (){
       //this.props.todos.loadItems();
@@ -57,8 +61,13 @@ class App extends Component {
         completedTaskCount,
         displayComplete,
         showAddItemModal,
+        lists,
         currentList
     } = this.props.todos;
+
+    let options = lists.map((list, i) => {
+        return <option key={i} value={list}>{list}</option>;
+    });
     
     let remainingThings = items.map((item, i) => {
       var boundClick = this.handleToggleComplete.bind(this, i);
@@ -79,17 +88,17 @@ class App extends Component {
                 <i className="material-icons">done</i>
             </li>
         );
-    });
-    
+    });    
+
     return (
       <div>          
         <Grid>
             <Row>           
                 <Header 
+                    list={currentList}
                     completed={completedTaskCount} 
                     remaining={remainingTaskCount} 
                     handleReset={this.handleReset}    
-                    currentList={currentList}
                 />
             </Row>            
             <Row md={12}>
@@ -100,8 +109,7 @@ class App extends Component {
                             onChange={this.handleSelectList.bind(this)}
                         >
                             <option value="">select a list</option>
-                            <option value="random">random</option>
-                            <option value="monday">monday</option>
+                            {options}                            
                         </select>
                     </Paper>
                     <br />                                       
@@ -110,8 +118,7 @@ class App extends Component {
                     <Paper zDepth={4}>                               
                         {items.length > 0 &&<ul className="list-group">
                         {remainingThings}
-                        </ul>
-                        }
+                        </ul>}
                         {!items.length > 0 &&
                             <div className="well well-lg">
                                 <Row>

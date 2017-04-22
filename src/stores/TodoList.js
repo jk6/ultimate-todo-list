@@ -6,15 +6,15 @@ class TodoList {
   @observable listLoaded = false;
   @observable displayComplete = false;
   @observable showAddItemModal = false;
+  @observable lists = ['monday', 'random', 'tech'];   // temp
   @observable currentList = '';
 
   @action loadItems (list){
     if (list != ''){
-      axios.get(`./data/${list}.json`)
-        //.then(response => Object.assign(this.items, response.data))        
-        .then(response => this.items = response.data)
-        .then(() => this.currentList = list)
-        .catch(err => console.log(err.toString()))
+      axios.get(`./data/${list}.json`)                
+            .then(response => this.items = response.data)
+            .then(() => this.currentList = list)
+            .catch(err => console.log(err.toString()))
     }
     else {
       this.currentList = '';
@@ -45,8 +45,16 @@ class TodoList {
     this.showAddItemModal = true;
   }
   @action addListItem (newItem){    
-    this.items = [...this.items, newItem];    
-    this.showAddItemModal = false;
+    let matches = this.items.filter(item => item.name == newItem.name).length;
+
+    if (matches == 0){
+      this.items = [...this.items, newItem];  
+    }
+    else {
+      alert(`'${newItem.name}' already exists`);
+    }
+
+    this.showAddItemModal = false;   
   }
   @action cancelAdd (){
     this.showAddItemModal = false;
