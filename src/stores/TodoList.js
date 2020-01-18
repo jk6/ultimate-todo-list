@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import axios from 'axios';
 
-class TodoList {
+export default class TodoList {
   @observable items = [];   
   @observable listLoaded = false;
   @observable displayComplete = false;
@@ -10,7 +10,7 @@ class TodoList {
   @observable currentList = '';
 
   @action loadItems (list){
-    if (list != ''){
+    if (list !== ''){
       axios.get(`./data/${list}.json`)                
             .then(response => this.items = response.data)
             .then(() => this.currentList = list)
@@ -23,14 +23,14 @@ class TodoList {
   }  
 
   @computed get completedTasks (){
-    return this.items.filter(thing => thing.done == true);
+    return this.items.filter(thing => thing.done === true);
   }    
   
   @computed get remainingTaskCount (){
-    return this.items.filter(thing => thing.done == false).length;   
+    return this.items.filter(thing => thing.done === false).length;   
   }
   @computed get completedTaskCount (){
-    return this.items.filter(thing => thing.done == true).length;   
+    return this.items.filter(thing => thing.done === true).length;   
   }
   @action toggleComplete (idx){
     this.items[idx].done = !this.items[idx].done;    
@@ -45,9 +45,9 @@ class TodoList {
     this.showAddItemModal = true;
   }
   @action addListItem (newItem){    
-    let matches = this.items.filter(item => item.name == newItem.name).length;
+    let matches = this.items.filter(item => item.name === newItem.name).length;
 
-    if (matches == 0){
+    if (matches === 0){
       this.items = [...this.items, newItem];  
     }
     else {
@@ -60,5 +60,3 @@ class TodoList {
     this.showAddItemModal = false;
   }
 }
-
-export default new TodoList();

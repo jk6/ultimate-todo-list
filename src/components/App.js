@@ -15,19 +15,16 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'material-design-icons/iconfont/material-icons.css';
 
 @inject('todos') @observer
-class App extends Component {
+export default class App extends Component {
   constructor (props){
     super (props);
     
-    this.handleReset = this.handleReset.bind(this);
-    this.handleShowAddItemModal = this.handleShowAddItemModal.bind(this);
-    this.handleAddListItem = this.handleAddListItem.bind(this);
-    this.handleCancelAdd = this.handleCancelAdd.bind(this);
   }
-  handleShowAddItemModal (){
+  handleShowAddItemModal = () => {
       this.props.todos.showNewItemModal();
-  }
-  @action handleAddListItem (){
+  };
+
+  @action handleAddListItem = () => {
     const { items } = this.props.todos;
 
     let newObj = {
@@ -37,19 +34,24 @@ class App extends Component {
     };
 
     this.props.todos.addListItem(newObj);    
-  }
-  handleCancelAdd (){
+  };
+
+  handleCancelAdd = () => {
       this.props.todos.cancelAdd();
-  }
-  handleToggleComplete (idx){
+  };
+
+  handleToggleComplete = idx => {
     this.props.todos.toggleComplete(idx);    
-  }
-  handleReset (){
+  };
+
+  handleReset = () => {
     this.props.todos.resetChecks();
-  }
-  handleSelectList (e){
+  };
+
+  handleSelectList = e => {
     this.props.todos.loadItems(e.target.value);        
-  }
+  };
+
   componentDidMount (){
       //this.props.todos.loadItems();
   }
@@ -176,7 +178,7 @@ class App extends Component {
                         style={{marginRight: 20}}
                         backgroundColor="grey"
                         //secondary={true}
-                        disabled={items.length == 0}
+                        disabled={items.length === 0}
                         zDepth={4}
                         onTouchTap={this.handleReset}
                     >
@@ -228,5 +230,3 @@ const styles = {
         cursor: 'pointer'
     }
 };
-
-export default App;

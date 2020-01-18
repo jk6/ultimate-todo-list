@@ -1,7 +1,7 @@
-import todo from './TodoList';
+import TodoList from './TodoList';
 
 const stores = {
-    todo
+    todoList: new TodoList()
 };
 
 export default stores;

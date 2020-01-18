@@ -16,7 +16,7 @@ document.body.style.backgroundColor = '#e2e2e2';
 
 ReactDOM.render(
     <MuiThemeProvider muiTheme={getMuiTheme(baseTheme)}>
-        <Provider todos={store.todo}>
+        <Provider todos={store.todoList}>
             <App />
         </Provider>
     </MuiThemeProvider>, document.getElementById('content')
