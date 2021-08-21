@@ -12,191 +12,167 @@ import Header from './Header';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'material-design-icons/iconfont/material-icons.css';
 
-@inject('todos') @observer
+@inject('todos')
+@observer
 export default class App extends Component {
-  constructor (props){
-    super (props);
-    
+  constructor(props) {
+    super(props);
   }
   handleShowAddItemModal = () => {
-      this.props.todos.showNewItemModal();
+    this.props.todos.showNewItemModal();
   };
 
   @action handleAddListItem = () => {
     const { items } = this.props.todos;
 
     let newObj = {
-        id: items.length.toString(),
-        name: this.newItem.value,
-        done: false
+      id: items.length.toString(),
+      name: this.newItem.value,
+      done: false,
     };
 
-    this.props.todos.addListItem(newObj);    
+    this.props.todos.addListItem(newObj);
   };
 
   handleCancelAdd = () => {
-      this.props.todos.cancelAdd();
+    this.props.todos.cancelAdd();
   };
 
-  handleToggleComplete = idx => {
-    this.props.todos.toggleComplete(idx);    
+  handleToggleComplete = (idx) => {
+    this.props.todos.toggleComplete(idx);
   };
 
   handleReset = () => {
     this.props.todos.resetChecks();
   };
 
-  handleSelectList = e => {
-    this.props.todos.loadItems(e.target.value);        
+  handleSelectList = (e) => {
+    this.props.todos.loadItems(e.target.value);
   };
 
-  render (){
-    const { 
-        items, 
-        completedTasks, 
-        remainingTaskCount, 
-        completedTaskCount,
-        showAddItemModal,
-        lists,
-        currentList
-    } = this.props.todos;
+  render() {
+    const { items, completedTasks, remainingTaskCount, completedTaskCount, showAddItemModal, lists, currentList } =
+      this.props.todos;
 
     let options = lists.map((list, i) => {
-        return <option key={i} value={list}>{list}</option>;
+      return (
+        <option key={i} value={list}>
+          {list}
+        </option>
+      );
     });
-    
+
     let remainingThings = items.map((item, i) => {
       var boundClick = this.handleToggleComplete.bind(this, i);
       return (
-        <li key={i} className="list-group-item">              
-            <Checkbox 
-                label={!item.done ? item.name : <strike>{item.name}</strike>}                   
-                checked={item.done}   
-                onClick={boundClick}
-            />
+        <li key={i} className="list-group-item">
+          <Checkbox
+            label={!item.done ? item.name : <strike>{item.name}</strike>}
+            checked={item.done}
+            onClick={boundClick}
+          />
         </li>
       );
-    });    
+    });
     let completedThings = completedTasks.map((item, i) => {
-        return (
-            <li key={i} className="list-group-item">
-                {item.name}&nbsp;                    
-                <i className="material-icons">done</i>
-            </li>
-        );
-    });    
+      return (
+        <li key={i} className="list-group-item">
+          {item.name}&nbsp;
+          <i className="material-icons">done</i>
+        </li>
+      );
+    });
 
     return (
-      <div>          
+      <div>
         <Grid>
-            <Row>           
-                <Header 
-                    list={currentList}
-                    completed={completedTaskCount} 
-                    remaining={remainingTaskCount} 
-                    handleReset={this.handleReset}    
-                />
-            </Row>            
-            <Row md={12}>
-                <Col md={4}>                    
-                    <Paper zDepth={4}>
-                        <select 
-                            className="form form-control" 
-                            onChange={this.handleSelectList.bind(this)}
-                        >
-                            <option value="">select a list</option>
-                            {options}                            
-                        </select>
-                    </Paper>
-                    <br />                                       
-                </Col>
-                <Col md={4} > 
-                    <Paper zDepth={4}>                               
-                        {items.length > 0 &&<ul className="list-group">
-                        {remainingThings}
-                        </ul>}
-                        {!items.length > 0 &&
-                            <div className="well well-lg">
-                                <Row>
-                                    <Col>
-                                        <span style={{fontSize: 20}}>
-                                            <i className="glyphicon glyphicon-arrow-left text-muted"></i>
-                                        </span>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    &nbsp;
-                                </Row>
-                                <Row>
-                                    &nbsp;
-                                </Row>
-                                <Row>
-                                    &nbsp;
-                                </Row>
-                            </div>
-                        }
-                    </Paper>
-                </Col>          
-                <Col md={4}>      
-                    <Paper zDepth={4}>      
-                        <ul className="list-group">
-                        {completedThings}
-                        </ul>
-                    </Paper>
-                </Col>
-            </Row>              
-            <Row>
-                <Col md={4} mdOffset={4}>
-                    <hr />
-                </Col>
-            </Row>
-            <Row>
-                <Col mdOffset={6} smOffset={10} xsOffset={5}>
-                    <FloatingActionButton 
-                        style={{marginRight: 20}}
-                        disabled={items.length == 0}
-                        zDepth={4}
-                        onTouchTap={this.handleShowAddItemModal}
-                    >
-                        <ContentAdd />
-                    </FloatingActionButton>                                    
-                    <FloatingActionButton 
-                        style={{marginRight: 20}}
-                        backgroundColor="grey"
-                        disabled={items.length === 0}
-                        zDepth={4}
-                        onTouchTap={this.handleReset}
-                    >
-                        <i className="glyphicon glyphicon-refresh text-muted"></i>
-                    </FloatingActionButton>
-                </Col>
-            </Row>                 
+          <Row>
+            <Header
+              list={currentList}
+              completed={completedTaskCount}
+              remaining={remainingTaskCount}
+              handleReset={this.handleReset}
+            />
+          </Row>
+          <Row md={12}>
+            <Col md={4}>
+              <Paper zDepth={4}>
+                <select className="form form-control" onChange={this.handleSelectList.bind(this)}>
+                  <option value="">select a list</option>
+                  {options}
+                </select>
+              </Paper>
+              <br />
+            </Col>
+            <Col md={4}>
+              <Paper zDepth={4}>
+                {items.length > 0 && <ul className="list-group">{remainingThings}</ul>}
+                {!items.length > 0 && (
+                  <div className="well well-lg">
+                    <Row>
+                      <Col>
+                        <span style={{ fontSize: 20 }}>
+                          <i className="glyphicon glyphicon-arrow-left text-muted"></i>
+                        </span>
+                      </Col>
+                    </Row>
+                    <Row>&nbsp;</Row>
+                    <Row>&nbsp;</Row>
+                    <Row>&nbsp;</Row>
+                  </div>
+                )}
+              </Paper>
+            </Col>
+            <Col md={4}>
+              <Paper zDepth={4}>
+                <ul className="list-group">{completedThings}</ul>
+              </Paper>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={4} mdOffset={4}>
+              <hr />
+            </Col>
+          </Row>
+          <Row>
+            <Col mdOffset={6} smOffset={10} xsOffset={5}>
+              <FloatingActionButton
+                style={{ marginRight: 20 }}
+                disabled={items.length == 0}
+                zDepth={4}
+                onTouchTap={this.handleShowAddItemModal}
+              >
+                <ContentAdd />
+              </FloatingActionButton>
+              <FloatingActionButton
+                style={{ marginRight: 20 }}
+                backgroundColor="grey"
+                disabled={items.length === 0}
+                zDepth={4}
+                onTouchTap={this.handleReset}
+              >
+                <i className="glyphicon glyphicon-refresh text-muted"></i>
+              </FloatingActionButton>
+            </Col>
+          </Row>
         </Grid>
         <Modal show={showAddItemModal} onHide={this.close}>
           <Modal.Header>
             <Modal.Title>{`Add a new item to list '${currentList}'`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <input 
-                type="text" 
-                className="form form-control" 
-                ref={text => this.newItem = text}
-                placeholder="enter new item..." 
+            <input
+              type="text"
+              className="form form-control"
+              ref={(text) => (this.newItem = text)}
+              placeholder="enter new item..."
             />
-          </Modal.Body>  
+          </Modal.Body>
           <Modal.Footer>
-            <RaisedButton 
-                label="OK"
-                primary={true}
-                onClick={this.handleAddListItem}
-            />
+            <RaisedButton label="OK" primary={true} onClick={this.handleAddListItem} />
             &nbsp;
-            <FlatButton 
-                label="cancel"
-                onClick={this.handleCancelAdd}
-            />
-
-          </Modal.Footer>          
+            <FlatButton label="cancel" onClick={this.handleCancelAdd} />
+          </Modal.Footer>
         </Modal>
       </div>
     );
@@ -204,8 +180,8 @@ export default class App extends Component {
 }
 
 const styles = {
-    reset: {
-        fontSize: 48,
-        cursor: 'pointer'
-    }
+  reset: {
+    fontSize: 48,
+    cursor: 'pointer',
+  },
 };

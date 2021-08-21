@@ -26,6 +26,8 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "mobx-react-devtools": "^4.2.11",
+    "prettier": "^2.3.2",
+    "pretty-quick": "^3.1.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
