@@ -6,11 +6,9 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import Snackbar from 'material-ui/Snackbar';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Paper from 'material-ui/Paper';
 import Header from './Header';
-//import IconButton from 'material-ui/IconButton';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'material-design-icons/iconfont/material-icons.css';
 
@@ -52,16 +50,12 @@ export default class App extends Component {
     this.props.todos.loadItems(e.target.value);        
   };
 
-  componentDidMount (){
-      //this.props.todos.loadItems();
-  }
   render (){
     const { 
         items, 
         completedTasks, 
         remainingTaskCount, 
         completedTaskCount,
-        displayComplete,
         showAddItemModal,
         lists,
         currentList
@@ -166,18 +160,9 @@ export default class App extends Component {
                     >
                         <ContentAdd />
                     </FloatingActionButton>                                    
-                    {/*<span 
-                        onClick={this.handleReset} 
-                        style={styles.reset} 
-                        disabled={items.length == 0}
-                    >*/}
-                        {/*<i className="material-icons md-40">autorenew</i>*/}
-                        {/*<i className="glyphicon glyphicon-refresh text-muted"></i>
-                    </span>*/}
                     <FloatingActionButton 
                         style={{marginRight: 20}}
                         backgroundColor="grey"
-                        //secondary={true}
                         disabled={items.length === 0}
                         zDepth={4}
                         onTouchTap={this.handleReset}
@@ -187,12 +172,6 @@ export default class App extends Component {
                 </Col>
             </Row>                 
         </Grid>
-        {/*<Snackbar
-          open={displayComplete}
-          message="All items complete!"
-          autoHideDuration={4000}
-          //onRequestClose={this.handleRequestClose}
-        />*/}
         <Modal show={showAddItemModal} onHide={this.close}>
           <Modal.Header>
             <Modal.Title>{`Add a new item to list '${currentList}'`}</Modal.Title>
